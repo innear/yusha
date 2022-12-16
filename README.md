@@ -1,4 +1,4 @@
-# Katyusha
+# Yusha
 
 ## Language
 ```
@@ -12,5 +12,5 @@ Embroid
 
 ## Desc
 ```
-this is katyusha
+this is yusha
 ```

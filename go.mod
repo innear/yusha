@@ -1,3 +1,3 @@
-module github.com/vrbyte/katyusha
+module github.com/vrbyte/yusha
 
 go 1.19
