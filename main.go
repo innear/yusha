@@ -2,8 +2,6 @@ package main
 
 import "fmt"
 
-var str = "Hello World..."
-
 func main() {
-	fmt.Println(str)
+	fmt.Println("Hello, this is yusha")
 }
