@@ -5,6 +5,7 @@
 package filesys
 
 import (
+	"github.com/vrbyte/yusha/config"
 	"log"
 	"net/http"
 	"os"
@@ -22,20 +23,20 @@ type FileControlInter interface {
 // 文件系统抽象模型的实现结构
 type fileControl struct {
 	h            http.Handler
-	path         string
+	root         string
 	indexHtmlUrl string
 }
 
 // NewFileControl 对外提供的构造方法
-func NewFileControl(path string) http.Handler {
-	fc := &fileControl{nil, path, ""}
+func NewFileControl() http.Handler {
+	fc := &fileControl{nil, config.Yusha.Root, ""}
 	fc.initFileSys()
 	return fc
 }
 
 // 实现 http.Handler 接口
 func (fc *fileControl) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	log.Println("FileControlInter HttpRequest Message ====> host: " + r.Host + ", url: " + r.URL.Path + ", method: " + r.Method)
+	log.Println("FileControlInter HttpRequest Message ====> host: url: " + r.URL.Path + ", method: " + r.Method)
 	// 非 GET 请求直接拒绝
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -50,12 +51,12 @@ func (fc *fileControl) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 // 初始化文件系统
 func (fc *fileControl) initFileSys() {
-	fi, err := os.Stat(fc.path)
+	fi, err := os.Stat(fc.root)
 	if err != nil || !fi.IsDir() {
-		panic("No directory exists in the current path : " + fc.path)
+		panic("No directory exists in the current path : " + fc.root)
 	}
 	fc.initIndexHtmlUrl()
-	fc.h = http.FileServer(http.Dir(fc.path))
+	fc.h = http.FileServer(http.Dir(fc.root))
 }
 
 // url 判断与检查
@@ -75,9 +76,9 @@ func (fc *fileControl) checkUrl(url string, l int) bool {
 
 // 生成 index.html 目标文件的 url
 func (fc *fileControl) initIndexHtmlUrl() {
-	if strings.HasSuffix(fc.path, "/") {
-		fc.indexHtmlUrl = fc.path + "index.html"
+	if strings.HasSuffix(fc.root, "/") {
+		fc.indexHtmlUrl = fc.root + "index.html"
 		return
 	}
-	fc.indexHtmlUrl = fc.path + "/index.html"
+	fc.indexHtmlUrl = fc.root + "/index.html"
 }
