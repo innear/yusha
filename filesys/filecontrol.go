@@ -27,11 +27,11 @@ type fileControl struct {
 	indexHtmlUrl string
 }
 
-// NewFileControl 对外提供的构造方法
-func NewFileControl() http.Handler {
+// NewAndInitFileControl 文件系统控制初始化方法
+func NewAndInitFileControl() {
 	fc := &fileControl{nil, config.Yusha.Root, ""}
 	fc.initFileSys()
-	return fc
+	http.Handle("/", fc)
 }
 
 // 实现 http.Handler 接口
