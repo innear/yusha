@@ -4,6 +4,7 @@
 
 package logger
 
+// 日志打印级别常量
 const (
 	INFO = iota
 	WARN

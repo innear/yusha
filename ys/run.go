@@ -14,12 +14,14 @@ import (
 
 var port string
 
+// golang 加载机制触发 init 函数
 func init() {
 	filesys.NewAndInitFileControl()
 	proxy.NewAndInitProxy()
 	port = ":" + strconv.Itoa(int(config.Yusha.Port))
 }
 
+// Run 主运行函数
 func Run() {
 	if config.Yusha.CertFile != "" && config.Yusha.KeyFile != "" {
 		err := http.ListenAndServeTLS(port, config.Yusha.CertFile, config.Yusha.KeyFile, nil)
