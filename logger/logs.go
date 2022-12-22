@@ -8,6 +8,11 @@ import (
 	"log"
 )
 
+/**
+后续日志模块的功能在这包下实现
+具体实现还要规划一下
+*/
+
 func LogOut(t int, v any) {
 	switch t {
 	case INFO:
