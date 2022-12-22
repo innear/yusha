@@ -5,11 +5,11 @@
 package filesys
 
 import (
-	"github.com/vrbyte/yusha/config"
 	"log"
 	"net/http"
 	"os"
 	"strings"
+	"yusha/config"
 )
 
 type FileControlInter interface {
@@ -25,11 +25,10 @@ type fileControl struct {
 	indexHtmlUrl string
 }
 
-func NewAndInitFileControl() FileControlInter {
+func NewAndInitFileControl() {
 	fc := &fileControl{nil, config.Yusha.Root, ""}
 	fc.initFileSys()
 	http.Handle("/", fc)
-	return fc
 }
 
 func (fc *fileControl) ServeHTTP(w http.ResponseWriter, r *http.Request) {

@@ -1,3 +1,3 @@
-module github.com/vrbyte/yusha
+module yusha
 
 go 1.19
