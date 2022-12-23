@@ -33,7 +33,7 @@ func NewAndInitProxy() {
 	// 判断是否需要开启代理模块
 	if config.Yusha.ProxyAddr != "" && config.Yusha.ProxyPort != 0 && config.Yusha.ProxyApi != "/" {
 		ysp := &YuShaProxy{}
-		ysp.hp = "https"
+		ysp.hp = "http"
 		if config.Yusha.CertFile != "" && config.Yusha.KeyFile != "" {
 			ysp.hp = "https"
 		}
