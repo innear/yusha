@@ -15,27 +15,27 @@ var (
 	MethodNotAllowed = errors.New("method not support")
 )
 
-var YuShaHttpClient = &YuShaClient{http.Client{Timeout: time.Second * time.Duration(config.Yusha.Timeout)}}
+var yuShaHttpClient = &yuShaClient{http.Client{Timeout: time.Second * time.Duration(config.Yusha.Timeout)}}
 
-type YuShaClient struct {
+type yuShaClient struct {
 	http.Client
 }
 
 func Proxy(r *http.Request) (resp *http.Response, err error) {
 	switch r.Method {
 	case http.MethodGet:
-		return YuShaHttpClient.Get(r)
+		return yuShaHttpClient.Get(r)
 	case http.MethodPost:
-		return YuShaHttpClient.Post(r)
+		return yuShaHttpClient.Post(r)
 	default:
 		return nil, MethodNotAllowed
 	}
 }
 
-func (ysc *YuShaClient) Get(r *http.Request) (resp *http.Response, err error) {
+func (ysc *yuShaClient) Get(r *http.Request) (resp *http.Response, err error) {
 	return ysc.Do(r)
 }
 
-func (ysc *YuShaClient) Post(r *http.Request) (resp *http.Response, err error) {
+func (ysc *yuShaClient) Post(r *http.Request) (resp *http.Response, err error) {
 	return ysc.Do(r)
 }
