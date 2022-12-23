@@ -34,7 +34,7 @@ func NewAndInitProxy() {
 	if config.Yusha.ProxyAddr != "" && config.Yusha.ProxyPort != 0 && config.Yusha.ProxyApi != "/" {
 		ysp := &YuShaProxy{}
 		ysp.hp = "http"
-		if config.Yusha.CertFile != "" && config.Yusha.KeyFile != "" {
+		if config.Yusha.ProxyCertFile != "" && config.Yusha.ProxyKeyFile != "" {
 			ysp.hp = "https"
 		}
 		ysp.host = config.Yusha.ProxyAddr + ":" + strconv.Itoa(int(config.Yusha.ProxyPort))
