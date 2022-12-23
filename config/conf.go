@@ -23,17 +23,21 @@ CertFile TLS 加密需要的证书文件路径
 KeyFile TLS 加密需要的密钥文件路径
 ProxyAddr 代理地址(可以为ip或者域名)
 ProxyApi 代理接口 api 前缀标识
-ProxyHeader 代理过程需要传递的 header 内容, 例如 token 等(多个 header 的 key 用 ; 分隔, 例如 token;Content-Type;Connection)
+ProxyCertFile 代理接口加密需要的证书文件路径
+ProxyKeyFile  代理接口加密需要的密钥文件路径
+TimeOut http 请求代理转发超时时间参数(单位秒)
 */
 type YuShaConf struct {
-	Root      string
-	Port      uint16
-	CertFile  string
-	KeyFile   string
-	ProxyAddr string
-	ProxyPort uint16
-	ProxyApi  string
-	Timeout   int
+	Root          string
+	Port          uint16
+	CertFile      string
+	KeyFile       string
+	ProxyAddr     string
+	ProxyPort     uint16
+	ProxyApi      string
+	ProxyCertFile string
+	ProxyKeyFile  string
+	Timeout       int
 }
 
 // Yusha 全局配置参数
@@ -68,6 +72,20 @@ func init() {
 
 	if Yusha.KeyFile != "" {
 		_, err := os.Stat(Yusha.KeyFile)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	if Yusha.ProxyCertFile != "" {
+		_, err := os.Stat(Yusha.ProxyCertFile)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	if Yusha.ProxyKeyFile != "" {
+		_, err := os.Stat(Yusha.ProxyKeyFile)
 		if err != nil {
 			panic(err)
 		}
