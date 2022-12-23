@@ -26,14 +26,14 @@ ProxyApi 代理接口 api 前缀标识
 ProxyHeader 代理过程需要传递的 header 内容, 例如 token 等(多个 header 的 key 用 ; 分隔, 例如 token;Content-Type;Connection)
 */
 type YuShaConf struct {
-	Root        string
-	Port        uint16
-	CertFile    string
-	KeyFile     string
-	ProxyAddr   string
-	ProxyPort   uint16
-	ProxyApi    string
-	ProxyHeader string
+	Root      string
+	Port      uint16
+	CertFile  string
+	KeyFile   string
+	ProxyAddr string
+	ProxyPort uint16
+	ProxyApi  string
+	Timeout   int
 }
 
 // Yusha 全局配置参数
@@ -42,8 +42,9 @@ var Yusha *YuShaConf
 // 初始化
 func init() {
 	Yusha = &YuShaConf{
-		Root: "./html",
-		Port: 8100,
+		Root:    "./html",
+		Port:    8100,
+		Timeout: 3,
 	}
 	_, err := os.Stat(defaultProfilePath)
 	if err != nil {
@@ -57,7 +58,26 @@ func init() {
 		log.Println("Failed to transfer the configuration file content to JSON")
 		panic(err)
 	}
-	if Yusha.ProxyApi != "" && !strings.HasPrefix(Yusha.ProxyApi, "/") {
+
+	if Yusha.CertFile != "" {
+		_, err := os.Stat(Yusha.CertFile)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	if Yusha.KeyFile != "" {
+		_, err := os.Stat(Yusha.KeyFile)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	if !strings.HasPrefix(Yusha.ProxyApi, "/") {
 		Yusha.ProxyApi = "/" + Yusha.ProxyApi
+	}
+
+	if !strings.HasSuffix(Yusha.ProxyApi, "/") {
+		Yusha.ProxyApi += "/"
 	}
 }
