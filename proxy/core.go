@@ -17,7 +17,7 @@ import (
 // YuShaProxyInter 代理模块的等级抽象接口
 type YuShaProxyInter interface {
 	ServeHTTP(http.ResponseWriter, *http.Request)
-	DealRequest(r *http.Request)
+	dealRequest(r *http.Request)
 }
 
 // YuShaProxy 代理模块等级抽象接口的具体实现等级父类
@@ -48,7 +48,7 @@ func NewAndInitProxy() {
 // 实现 golang 内部的 http.Handle 接口
 func (ysp *YuShaProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
-	ysp.DealRequest(r)
+	ysp.dealRequest(r)
 
 	resp, err := client.Proxy(r)
 	defer resp.Body.Close()
@@ -83,7 +83,7 @@ func (ysp *YuShaProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write(body)
 }
 
-func (ysp *YuShaProxy) DealRequest(r *http.Request) {
+func (ysp *YuShaProxy) dealRequest(r *http.Request) {
 	r.URL.Host = ysp.host
 	r.URL.Scheme = ysp.hp
 	r.URL.Path = strings.Replace(r.URL.Path, ysp.api, "", 1)
