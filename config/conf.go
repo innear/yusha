@@ -46,9 +46,10 @@ var Yusha *YuShaConf
 // 初始化
 func init() {
 	Yusha = &YuShaConf{
-		Root:    "./html",
-		Port:    8100,
-		Timeout: 3,
+		Root:     "./html",
+		Port:     8100,
+		ProxyApi: "/api",
+		Timeout:  3,
 	}
 	_, err := os.Stat(defaultProfilePath)
 	if err != nil {
