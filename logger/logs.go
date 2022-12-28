@@ -8,18 +8,42 @@ import (
 	"log"
 )
 
+var logChan chan *yuShaLog = make(chan *yuShaLog, 200)
+
 /**
 后续日志模块的功能在这包下实现
 具体实现还要规划一下
 */
 
-func LogOut(t int, v any) {
-	switch t {
-	case INFO:
-		log.Println("INFO", v)
-	case WARN:
-		log.Println("WARN", v)
-	case ERROR:
-		log.Println("ERROR", v)
+// 日志结构体模型
+type yuShaLog struct {
+	t string
+	v string
+}
+
+// 日志服务总线
+func logServer() {
+	for {
+		l := <-logChan
+		log.Println(l.t + l.v)
 	}
+}
+
+func init() {
+	go logServer()
+}
+
+func INFO(v string) {
+	l := &yuShaLog{INFO_, v}
+	logChan <- l
+}
+
+func WARN(v string) {
+	l := &yuShaLog{WARN_, v}
+	logChan <- l
+}
+
+func ERROR(v string) {
+	l := &yuShaLog{ERROR_, v}
+	logChan <- l
 }

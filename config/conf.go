@@ -53,8 +53,8 @@ func init() {
 	}
 	_, err := os.Stat(defaultProfilePath)
 	if err != nil {
-		logger.LogOut(logger.WARN, "No corresponding file found in the default configuration file path : "+defaultProfilePath)
-		logger.LogOut(logger.WARN, "Default configuration will be enabled in Yusha")
+		logger.WARN("No corresponding file found in the default configuration file path : " + defaultProfilePath)
+		logger.WARN("Default configuration will be enabled in Yusha")
 		return
 	}
 	b, _ := os.ReadFile(defaultProfilePath)

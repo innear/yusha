@@ -42,7 +42,7 @@ func NewAndInitProxy() {
 		http.Handle(ysp.api+"/", ysp)
 		return
 	}
-	logger.LogOut(logger.WARN, "Proxy mode is not enabled, there may be a problem with the parameters in the configuration file")
+	logger.WARN("Proxy mode is not enabled, there may be a problem with the parameters in the configuration file")
 }
 
 // 实现 golang 内部的 http.Handle 接口
