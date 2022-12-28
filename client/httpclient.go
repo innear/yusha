@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	MethodNotAllowed = errors.New("method not support")
+	MethodNotAllowedInProxy = errors.New("the reverse proxy does not support request methods other than get and post")
 )
 
 var yuShaHttpClient = &yuShaClient{http.Client{Timeout: time.Second * time.Duration(config.Yusha.Timeout)}}
@@ -28,7 +28,7 @@ func Proxy(r *http.Request) (resp *http.Response, err error) {
 	case http.MethodPost:
 		return yuShaHttpClient.Post(r)
 	default:
-		return nil, MethodNotAllowed
+		return nil, MethodNotAllowedInProxy
 	}
 }
 
