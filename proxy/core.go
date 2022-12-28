@@ -48,41 +48,46 @@ func NewAndInitProxy() {
 // 实现 golang 内部的 http.Handle 接口
 func (ysp *YuShaProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
+	// 处理 Request
 	ysp.dealRequest(r)
 
+	// 代理调用
 	resp, err := client.Proxy(r)
 	defer resp.Body.Close()
 
-	if err != nil {
-		if err == client.MethodNotAllowed {
+	// 异常处理
+	if err != nil && resp == nil {
+		if err == client.MethodNotAllowedInProxy {
 			w.WriteHeader(http.StatusMethodNotAllowed)
-			goto end
+			w.Write([]byte(err.Error()))
+			return
 		}
-		if resp != nil {
-			w.WriteHeader(resp.StatusCode)
-			goto end
-		}
-	end:
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(http.StatusText(http.StatusInternalServerError)))
 		return
 	}
 
+	// 代理调用状态判断
 	if resp.StatusCode != http.StatusOK {
 		w.WriteHeader(resp.StatusCode)
 		w.Write([]byte(http.StatusText(resp.StatusCode)))
 		return
 	}
 
+	// 读取数据
 	body, _ := io.ReadAll(resp.Body)
 
+	// 同步 Response header 信息
 	for k, v := range resp.Header {
 		for _, vv := range v {
 			w.Header().Add(k, vv)
 		}
 	}
-
+	// 回写数据
 	w.Write(body)
 }
 
+// 代理转发前对 Request 信息进行修改
 func (ysp *YuShaProxy) dealRequest(r *http.Request) {
 	r.URL.Host = ysp.host
 	r.URL.Scheme = ysp.hp
