@@ -6,7 +6,6 @@ package config
 
 import (
 	"encoding/json"
-	"log"
 	"os"
 	"strings"
 	"yusha/logger"
@@ -60,7 +59,7 @@ func init() {
 	b, _ := os.ReadFile(defaultProfilePath)
 	err = json.Unmarshal(b, Yusha)
 	if err != nil {
-		log.Println("Failed to transfer the configuration file content to JSON")
+		logger.ERROR("Failed to transfer the configuration file content to JSON")
 		panic(err)
 	}
 
