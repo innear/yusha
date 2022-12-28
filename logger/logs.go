@@ -8,7 +8,7 @@ import (
 	"log"
 )
 
-var logChan chan *yuShaLog = make(chan *yuShaLog, 200)
+var logChan = make(chan *yuShaLog, 200)
 
 /**
 后续日志模块的功能在这包下实现
