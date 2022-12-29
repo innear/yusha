@@ -5,11 +5,11 @@
 package filesys
 
 import (
-	"log"
 	"net/http"
 	"os"
 	"strings"
 	"yusha/config"
+	"yusha/logger"
 )
 
 // FileControlInter 静态资源代理(文件系统)顶级抽象接口
@@ -36,7 +36,7 @@ func NewAndInitFileControl() {
 
 // 实现 golang 内部的 http.Handle 接口
 func (fc *fileControl) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	log.Println("FileControlInter HttpRequest Message ====> url: " + r.URL.Path + ", method: " + r.Method)
+	logger.INFO("FileControlInter HttpRequest Message ====> url: " + r.URL.Path + ", method: " + r.Method)
 	// 静态资源访问模块非 GET 请求一律驳回
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)
