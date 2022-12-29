@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"yusha/config"
 	"yusha/filesys"
+	"yusha/logger"
 	"yusha/proxy"
 )
 
@@ -23,14 +24,17 @@ func init() {
 
 // Run 主运行函数
 func Run() {
+	defer logger.CheckLogChan()
 	if config.Yusha.CertFile != "" && config.Yusha.KeyFile != "" {
 		err := http.ListenAndServeTLS(port, config.Yusha.CertFile, config.Yusha.KeyFile, nil)
 		if err != nil {
+			logger.ERROR(err.Error())
 			panic(err)
 		}
 	}
 	err := http.ListenAndServe(port, nil)
 	if err != nil {
+		logger.ERROR(err.Error())
 		panic(err)
 	}
 }

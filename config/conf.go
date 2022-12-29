@@ -44,6 +44,7 @@ var Yusha *YuShaConf
 
 // 初始化
 func init() {
+	defer logger.CheckLogChan()
 	Yusha = &YuShaConf{
 		Root:     "./html",
 		Port:     8100,

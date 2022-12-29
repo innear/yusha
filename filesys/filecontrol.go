@@ -36,7 +36,7 @@ func NewAndInitFileControl() {
 
 // 实现 golang 内部的 http.Handle 接口
 func (fc *fileControl) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	logger.INFO("FileControlInter HttpRequest Message ====> url: " + r.URL.Path + ", method: " + r.Method)
+	logger.INFO("FileControlInter HttpRequest Message ====> url: " + r.URL.Path)
 	// 静态资源访问模块非 GET 请求一律驳回
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -51,9 +51,11 @@ func (fc *fileControl) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 // 主要初始化函数
 func (fc *fileControl) initFileSys() {
+	defer logger.CheckLogChan()
 	// 检测静态资源代理文件的顶级路径(默认为相对路径的 ./html 下)
 	fi, err := os.Stat(fc.root)
 	if err != nil || !fi.IsDir() {
+		logger.ERROR("No directory exists in the current path : " + fc.root)
 		panic("No directory exists in the current path : " + fc.root)
 	}
 	// 初始化 index.html 的路径

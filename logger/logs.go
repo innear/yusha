@@ -6,9 +6,18 @@ package logger
 
 import (
 	"log"
+	"os"
 )
 
-var logChan = make(chan *yuShaLog, 200)
+var (
+	logChan   = make(chan *yuShaLog, 300)
+	infoFile  *os.File
+	warnFile  *os.File
+	errorFile *os.File
+	infoLog   *log.Logger
+	warnLog   *log.Logger
+	errorLog  *log.Logger
+)
 
 /**
 后续日志模块的功能在这包下实现
@@ -17,7 +26,7 @@ var logChan = make(chan *yuShaLog, 200)
 
 // 日志结构体模型
 type yuShaLog struct {
-	t string
+	t int
 	v string
 }
 
@@ -25,25 +34,49 @@ type yuShaLog struct {
 func logServer() {
 	for {
 		l := <-logChan
-		log.Println(l.t + l.v)
+		switch l.t {
+		case INFO_:
+			infoLog.Println(l.v)
+		case WARN_:
+			warnLog.Println(l.v)
+		case ERROR_:
+			errorLog.Println(l.v)
+		default:
+			infoLog.Println(l.v)
+		}
 	}
 }
 
 func init() {
 	go logServer()
+	_, err := os.Stat("./log")
+	if err != nil {
+		os.Mkdir("log", 0777)
+	}
+	infoFile, _ = os.OpenFile("./log/yusha-info.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	warnFile, _ = os.OpenFile("./log/yusha-warn.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	errorFile, _ = os.OpenFile("./log/yusha-error.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	infoLog = log.New(infoFile, "[INFO] ", 3)
+	warnLog = log.New(warnFile, "[WARN] ", 3)
+	errorLog = log.New(errorFile, "[ERROR] ", 3)
 }
 
-func INFO(v string) {
-	l := &yuShaLog{INFO_, v}
-	logChan <- l
+func INFO(val string) {
+	logChan <- &yuShaLog{t: INFO_, v: val}
 }
 
-func WARN(v string) {
-	l := &yuShaLog{WARN_, v}
-	logChan <- l
+func WARN(val string) {
+	logChan <- &yuShaLog{t: WARN_, v: val}
 }
 
-func ERROR(v string) {
-	l := &yuShaLog{ERROR_, v}
-	logChan <- l
+func ERROR(val string) {
+	logChan <- &yuShaLog{t: ERROR_, v: val}
+}
+
+func CheckLogChan() {
+	for {
+		if len(logChan) == 0 {
+			break
+		}
+	}
 }

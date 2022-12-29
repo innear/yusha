@@ -60,10 +60,12 @@ func (ysp *YuShaProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if err == client.MethodNotAllowedInProxy {
 			w.WriteHeader(http.StatusMethodNotAllowed)
 			w.Write([]byte(err.Error()))
+			logger.ERROR("Proxy to " + r.URL.Path + " failed : " + client.MethodNotAllowedInProxy.Error())
 			return
 		}
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(http.StatusText(http.StatusInternalServerError)))
+		logger.ERROR("Proxy to " + r.URL.Path + " failed : " + http.StatusText(http.StatusInternalServerError))
 		return
 	}
 
@@ -71,6 +73,7 @@ func (ysp *YuShaProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if resp.StatusCode != http.StatusOK {
 		w.WriteHeader(resp.StatusCode)
 		w.Write([]byte(http.StatusText(resp.StatusCode)))
+		logger.ERROR("Proxy to " + r.URL.Path + " failed : " + http.StatusText(http.StatusInternalServerError))
 		return
 	}
 
@@ -85,6 +88,7 @@ func (ysp *YuShaProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	// 回写数据
 	w.Write(body)
+	logger.INFO("Proxy to " + r.URL.Path + " success")
 }
 
 // 代理转发前对 Request 信息进行修改
