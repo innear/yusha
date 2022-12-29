@@ -58,7 +58,7 @@ func (fc *fileControl) initFileSys() {
 	}
 	// 初始化 index.html 的路径
 	fc.initIndexHtmlUrl()
-	// 加载 goland 内部文件系统机制接口
+	// 加载 golang 内部文件系统机制接口
 	fc.h = http.FileServer(http.Dir(fc.root))
 }
 
