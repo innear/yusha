@@ -1,0 +1,6 @@
+{
+    "Root": "./html",
+    "Port": 8100,
+    "ProxyApi": "/api",
+    "TimeOut": 3
+}
