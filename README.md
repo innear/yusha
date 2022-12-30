@@ -24,4 +24,5 @@ Web 服务器; 反向代理
 ```
 go build main.go 生成可执行文件运行即可
 windows 编译环境下提供了 build.bat 双击执行即可生成 .exe 文件(该 .exe 执行时无 cmd 窗口, 其在后台运行, 可在任务管理器中看到 yusha.exe 服务)
+启动后通过 ip (localhost 或者 域名) 加端口号进行访问, 弹出 Yusha 的提示页及为部署成功
 ```
