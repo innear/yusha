@@ -9,6 +9,7 @@ import (
 	"os"
 )
 
+// 日志总线参数声明
 var (
 	logChan   = make(chan *yuShaLog, 300)
 	infoFile  *os.File
@@ -18,11 +19,6 @@ var (
 	warnLog   *log.Logger
 	errorLog  *log.Logger
 )
-
-/**
-后续日志模块的功能在这包下实现
-具体实现还要规划一下
-*/
 
 // 日志结构体模型
 type yuShaLog struct {
@@ -61,6 +57,8 @@ func init() {
 	errorLog = log.New(errorFile, "[ERROR] ", 3)
 }
 
+// 对外暴露的日志使用方法
+
 func INFO(val string) {
 	logChan <- &yuShaLog{t: INFO_, v: val}
 }
@@ -73,6 +71,7 @@ func ERROR(val string) {
 	logChan <- &yuShaLog{t: ERROR_, v: val}
 }
 
+// CheckLogChan 检查日志管道内消息是否全部消费完毕
 func CheckLogChan() {
 	for {
 		if len(logChan) == 0 {
