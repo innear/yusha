@@ -25,6 +25,7 @@ func init() {
 // Run 主运行函数
 func Run() {
 	defer logger.CheckLogChan()
+	// 判断是否需要 TLS
 	if config.Yusha.CertFile != "" && config.Yusha.KeyFile != "" {
 		err := http.ListenAndServeTLS(port, config.Yusha.CertFile, config.Yusha.KeyFile, nil)
 		if err != nil {
