@@ -57,6 +57,7 @@ func init() {
 		logger.WARN("Default configuration will be enabled in Yusha")
 		return
 	}
+	// 读取 JSON 配置文件
 	b, _ := os.ReadFile(defaultProfilePath)
 	err = json.Unmarshal(b, Yusha)
 	if err != nil {
