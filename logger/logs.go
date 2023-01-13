@@ -49,6 +49,7 @@ func init() {
 	if err != nil {
 		os.Mkdir("log", 0777)
 	}
+	// 初始化日志服务参数
 	infoFile, _ = os.OpenFile("./log/yusha-info.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	warnFile, _ = os.OpenFile("./log/yusha-warn.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	errorFile, _ = os.OpenFile("./log/yusha-error.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
