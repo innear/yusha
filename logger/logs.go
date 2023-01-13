@@ -7,6 +7,7 @@ package logger
 import (
 	"log"
 	"os"
+	"time"
 )
 
 // 日志总线参数声明
@@ -74,6 +75,8 @@ func ERROR(val string) {
 
 // CheckLogChan 检查日志管道内消息是否全部消费完毕
 func CheckLogChan() {
+	// 睡眠 1 秒, 确保所有日志都进入管道中
+	time.Sleep(time.Second)
 	for {
 		if len(logChan) == 0 {
 			break
