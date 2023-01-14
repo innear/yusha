@@ -24,7 +24,7 @@ type yuShaClient struct {
 	http.Client
 }
 
-// Proxy 代理转发方法
+// Proxy 代理转发函数
 func Proxy(r *http.Request) (resp *http.Response, err error) {
 	switch r.Method {
 	case http.MethodGet:
