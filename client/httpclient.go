@@ -16,7 +16,7 @@ var (
 	MethodNotAllowedInProxy = errors.New("the reverse proxy does not support request methods other than get and post")
 )
 
-// 全局 http client
+// 全局 http client 附加配置文件 http 请求超时参数
 var yuShaHttpClient = &yuShaClient{http.Client{Timeout: time.Second * time.Duration(config.Yusha.Timeout)}}
 
 // 组合 goland 底层 http.Client 结构, 进行底层方法的重写
@@ -26,6 +26,7 @@ type yuShaClient struct {
 
 // Proxy 代理转发函数
 func Proxy(r *http.Request) (resp *http.Response, err error) {
+	// 请求类型判断(暂时只支持 GET 和 POST 的转发)
 	switch r.Method {
 	case http.MethodGet:
 		return yuShaHttpClient.Get(r)
