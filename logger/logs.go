@@ -78,6 +78,7 @@ func CheckLogChan() {
 	// 睡眠 1 秒, 确保所有日志都进入管道中
 	time.Sleep(time.Second)
 	for {
+		// 日志管道中所有消息都被消费完毕后结束死循环
 		if len(logChan) == 0 {
 			break
 		}
