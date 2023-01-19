@@ -49,7 +49,7 @@ func (fc *fileControl) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	fc.h.ServeHTTP(w, r)
 }
 
-// 主要初始化函数
+// initFileSys 静态文件系统主要初始化函数
 func (fc *fileControl) initFileSys() {
 	defer logger.CheckLogChan()
 	// 检测静态资源代理文件的顶级路径(默认为相对路径的 ./html 下)
@@ -84,7 +84,7 @@ func (fc *fileControl) checkUrl(url string, l int) bool {
 	return false
 }
 
-// 初始化 index.html 文件路径
+// initIndexHtmlUrl 初始化 index.html 文件路径
 func (fc *fileControl) initIndexHtmlUrl() {
 	if strings.HasSuffix(fc.root, "/") {
 		fc.indexHtmlUrl = fc.root + "index.html"
