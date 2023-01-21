@@ -18,7 +18,7 @@ Web 服务器; http/https 反向代理
            (例如  '/api', 那么意味着 http://localhost:8100/api/** 之类的 http url 将通过中间件实现代理转发)
   ProxyCertFile 代理接口加密需要的证书文件路径(也就是添加支持 https)
   ProxyKeyFile  代理接口加密需要的密钥文件路径
-  TimeOut http 请求代理转发超时时间参数(单位秒, 默认 3 秒)
+  TimeOut http 请求代理转发超时时间参数(单位秒, 默认为 3 秒)
  ```
 编译运行
 ```
