@@ -17,7 +17,9 @@ var port string
 
 // golang 加载机制触发 init 函数
 func init() {
+	// 初始化文件管理系统
 	filesys.NewAndInitFileControl()
+	// 反向代理机制初始化
 	proxy.NewAndInitProxy()
 	port = ":" + strconv.Itoa(int(config.Yusha.Port))
 }
