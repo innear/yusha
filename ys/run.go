@@ -24,7 +24,7 @@ func init() {
 	port = ":" + strconv.Itoa(int(config.Yusha.Port))
 }
 
-// Run 主运行函数
+// Run 运行函数
 func Run() {
 	defer logger.CheckLogChan()
 	// 判断是否需要 TLS
