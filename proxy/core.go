@@ -20,8 +20,8 @@ type YuShaProxyInter interface {
 	dealRequest(r *http.Request)
 }
 
-// YuShaProxy 代理模块等级抽象接口的具体实现等级父类
-type YuShaProxy struct {
+// yuShaProxy 代理模块等级抽象接口的具体实现等级父类
+type yuShaProxy struct {
 	addr string
 	hp   string
 	host string
@@ -32,7 +32,7 @@ type YuShaProxy struct {
 func NewAndInitProxy() {
 	// 判断是否需要开启代理模块
 	if config.Yusha.ProxyAddr != "" && config.Yusha.ProxyPort != 0 && config.Yusha.ProxyApi != "/" {
-		ysp := &YuShaProxy{}
+		ysp := &yuShaProxy{}
 		ysp.hp = "http"
 		if config.Yusha.ProxyCertFile != "" && config.Yusha.ProxyKeyFile != "" {
 			ysp.hp = "https"
@@ -46,7 +46,7 @@ func NewAndInitProxy() {
 }
 
 // 实现 golang 内部的 http.Handle 接口
-func (ysp *YuShaProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (ysp *yuShaProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// 处理 Request
 	ysp.dealRequest(r)
@@ -92,7 +92,7 @@ func (ysp *YuShaProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 // 代理转发前对 Request 信息进行修改
-func (ysp *YuShaProxy) dealRequest(r *http.Request) {
+func (ysp *yuShaProxy) dealRequest(r *http.Request) {
 	r.URL.Host = ysp.host
 	r.URL.Scheme = ysp.hp
 	r.URL.Path = strings.Replace(r.URL.Path, ysp.api, "", 1)
