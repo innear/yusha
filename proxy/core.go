@@ -34,6 +34,7 @@ func NewAndInitProxy() {
 			ysp.hp = "https"
 		}
 		ysp.host = config.Yusha.ProxyAddr + ":" + strconv.Itoa(int(config.Yusha.ProxyPort))
+		// 处理 api 参数末尾的 / 字符
 		ysp.api = strings.TrimSuffix(config.Yusha.ProxyApi, "/")
 		http.Handle(ysp.api+"/", ysp)
 		return
