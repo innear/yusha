@@ -30,6 +30,7 @@ func NewAndInitProxy() {
 	if config.Yusha.ProxyAddr != "" && config.Yusha.ProxyPort != 0 && config.Yusha.ProxyApi != "/" {
 		ysp := &yuShaProxy{}
 		ysp.hp = "http"
+		// 判断是否启用 https
 		if config.Yusha.ProxyCertFile != "" && config.Yusha.ProxyKeyFile != "" {
 			ysp.hp = "https"
 		}
