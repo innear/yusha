@@ -86,5 +86,6 @@ func (fc *fileControl) initIndexHtmlUrl() {
 		fc.indexHtmlUrl = fc.root + "index.html"
 		return
 	}
+	// 拼接路径
 	fc.indexHtmlUrl = fc.root + "/index.html"
 }
