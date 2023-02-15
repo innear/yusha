@@ -12,7 +12,7 @@ var defaultProfilePath = "./conf/yusha.json"
 
 // YuShaConf 配置参数结构体
 /**
-Root 静态资源代理根路径(默认路径 ./html)
+Root 静态资源代理根路径(默认根路径 ./html)
 Port 监听端口(默认端口 8100)
 CertFile TLS 加密需要的证书文件路径
 KeyFile TLS 加密需要的密钥文件路径
