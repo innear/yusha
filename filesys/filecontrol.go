@@ -66,7 +66,7 @@ func (fc *fileControl) checkUrl(url string, l int) bool {
 	if url[l-1] != '/' {
 		return false
 	}
-	// 放行 /* 路径
+	// 放行 /* 等路径
 	if l != 1 {
 		return true
 	}
