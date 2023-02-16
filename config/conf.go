@@ -7,7 +7,7 @@ import (
 	"yusha/logger"
 )
 
-// 默认配置文件路径参数(默认路径为 ./conf/yusha.json)
+// 默认配置文件路径参数(默认配置文件路径为 ./conf/yusha.json)
 var defaultProfilePath = "./conf/yusha.json"
 
 // YuShaConf 配置参数结构体
