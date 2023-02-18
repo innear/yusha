@@ -78,7 +78,6 @@ func (ysp *yuShaProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// 读取数据
 	body, _ := io.ReadAll(resp.Body)
-
 	// 同步 Response header 信息
 	for k, v := range resp.Header {
 		for _, vv := range v {
