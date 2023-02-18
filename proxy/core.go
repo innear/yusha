@@ -40,6 +40,7 @@ func NewAndInitProxy() {
 		http.Handle(ysp.api+"/", ysp)
 		return
 	}
+	// 警告日志输出
 	logger.WARN("Proxy mode is not enabled, there may be a problem with the parameters in the configuration file")
 }
 
