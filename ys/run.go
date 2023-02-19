@@ -31,6 +31,7 @@ func Run() {
 			panic(err)
 		}
 	}
+	// 监听
 	err := http.ListenAndServe(port, nil)
 	if err != nil {
 		logger.ERROR(err.Error())
